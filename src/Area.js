@@ -24,4 +24,9 @@ class FilletArea {
     getY(){
         return this.#topLeftPoint.getY();
     }
+
+    setDimensions(width, height){
+        this.#width = width;
+        this.#height = height;
+    }
 }

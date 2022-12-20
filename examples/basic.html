@@ -5,15 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title></title>
     <link rel="stylesheet" href="../styles/basic.css" />
+    <script src="../src/CoreManager.js"></script>
     <script src="../src/Point.js"></script>
     <script src="../src/Area.js"></script>
     <script src="../src/MovePosition.js"></script>
     <script src="../src/Window.js"></script>
   </head>
   <body>
+    <button id="btn1">Hide window</button>
+    <button id="btn2">Show window</button>
     <div id="window_box"></div>
     <script>
         let simple_window = new FilletWindow();
+        let btn1 = document.getElementById("btn1");
+        btn1.addEventListener("click", function(e){
+          simple_window.hide();
+        });
+        btn2.addEventListener("click", function(e){
+          simple_window.show();
+        });
     </script>
   </body>
 </html>
