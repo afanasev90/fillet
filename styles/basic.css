@@ -4,4 +4,12 @@
     position: fixed;
     width: 300px;
     height: 300px;
+    transition-property:  box-shadow;
+    transition-duration: 2s;
+    
+}
+
+.fillet_illuminate {
+    box-shadow: 0px 0px 30px 0px rgba(255, 251, 0, 0.616);
+    
 }

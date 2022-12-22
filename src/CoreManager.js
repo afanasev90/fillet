@@ -1,6 +1,7 @@
 class FilletCoreManager {
     #browser_window_onresize_bind = null;
     #event_listeners = [];
+    #windows = [];
 
     constructor(){
         this.#browser_window_onresize_bind = this.browser_window_onresize.bind(this);
@@ -17,6 +18,24 @@ class FilletCoreManager {
 
     addEventListener(listener){
         this.#event_listeners.push(listener);
+    }
+
+    registerWindow(window){
+        this.#windows.push(window);
+    }
+
+    illuminateAllWindows(){
+        for (let w of this.#windows){
+            this.illuminateWindow(w);
+        }
+    }
+
+    illuminateWindow(window){
+        let r = window.getRoot();
+        r.addEventListener("transitionend", function(){
+            r.classList.remove("fillet_illuminate");
+        }, true);
+        r.classList.add("fillet_illuminate");
     }
 }
 

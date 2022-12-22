@@ -10,6 +10,8 @@ class FilletWindow {
 
     #bound_area = null;
     #can_outofbounds = true;
+    #can_edgestick = true;
+    #stickAreaWidth = 20;
 
     #doc_mouse_down_binded = null;
     #doc_mouse_up_binded = null;
@@ -46,6 +48,7 @@ class FilletWindow {
         this.#root.addEventListener("mousemove", this.mouse_move.bind(this));
 
         this.#bound_area = new FilletArea(new FilletPoint(0, 0), window.innerWidth, window.innerHeight);
+        this.#core_manager.registerWindow(this);
         this.#core_manager.addEventListener(this);
     }
 
@@ -55,6 +58,10 @@ class FilletWindow {
 
     getHeight(){
         return this.#root.offsetHeight;
+    }
+
+    getRoot(){
+        return this.#root;
     }
 
 
@@ -94,6 +101,22 @@ class FilletWindow {
                     win_y = this.#bound_area.getHeight() - this.getHeight(); 
                     this.#mp.changeClickPoint(new FilletPoint(this.#mp.getClickX(), Math.min(this.#bound_area.getHeight(), curPos.getY())));
                     this.#mp.changeStartPoint(new FilletPoint(this.#mp.getStartX(), win_y));
+                }
+            }
+
+            if (this.#can_edgestick){
+                if (win_x < this.#stickAreaWidth && win_x > this.#bound_area.getX()){
+                    win_x = 0;
+                }
+                else if (win_x > this.#bound_area.getWidth() - this.getWidth() - this.#stickAreaWidth && win_x < this.#bound_area.getWidth() - this.getWidth()){
+                    win_x = this.#bound_area.getWidth() - this.getWidth();
+                }
+
+                if (win_y < this.#stickAreaWidth && win_y > this.#bound_area.getY()){
+                    win_y = 0;
+                }
+                else if (win_y > this.#bound_area.getHeight() - this.getHeight() - this.#stickAreaWidth && win_y < this.#bound_area.getHeight() - this.getHeight()){
+                    win_y = this.#bound_area.getHeight() - this.getHeight();
                 }
             }
 
