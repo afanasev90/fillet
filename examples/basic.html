@@ -15,6 +15,7 @@
     <button id="btn1">Hide window</button>
     <button id="btn2">Show window</button>
     <button id="btn3">Illuminate</button>
+    <button id="btn4">Resize</button>
     <div id="window_box"></div>
     <script>
         let simple_window = new FilletWindow();
@@ -27,6 +28,9 @@
         });
         btn3.addEventListener("click", function(e){
           _FilletLib_CoreManager.illuminateAllWindows();
+        });
+        btn4.addEventListener("click", function(e){
+          simple_window.resize(500, 500);
         });
     </script>
   </body>

@@ -1,3 +1,7 @@
+/**
+ * Creates a new FilletCoreManager.
+ * @class
+ */
 class FilletCoreManager {
     #browser_window_onresize_bind = null;
     #event_listeners = [];

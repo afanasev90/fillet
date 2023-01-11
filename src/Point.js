@@ -1,3 +1,7 @@
+/**
+ * Creates a new FilletPoint.
+ * @class
+ */
 class FilletPoint {
     #x = null;
     #y = null;

@@ -1,12 +1,16 @@
 .fillet-window {
     border: 1px solid #cccccc;
-    padding: 16px;
     position: fixed;
     width: 300px;
     height: 300px;
     transition-property:  box-shadow;
     transition-duration: 2s;
     
+}
+
+.fillet-window-title {
+    height: 32px;
+    background-color: #E0E0E0;
 }
 
 .fillet_illuminate {

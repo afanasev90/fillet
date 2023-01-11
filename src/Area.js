@@ -1,3 +1,7 @@
+/**
+ * Creates a new FilletArea.
+ * @class
+ */
 class FilletArea {
     #topLeftPoint = null;
     #width = null;

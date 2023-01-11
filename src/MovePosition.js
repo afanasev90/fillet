@@ -1,3 +1,7 @@
+/**
+ * Creates a new FilletMovePosition.
+ * @class
+ */
 class FilletMovePosition {
     #start = null;
     #click = null;

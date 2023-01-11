@@ -1,26 +1,115 @@
-
+/**
+ * Creates a new FilletWindow.
+ * @class
+ */
 class FilletWindow {
+    /** 
+     * Browser Document object
+     * @type {Object} 
+     * @private
+    */
     #document = null;
+
+    /** 
+     * Flag. True if root element exists 
+     * @type {boolean} 
+     * @private
+    */
     #root_exists = false;
+
+    /** 
+     * Root element object
+     * @type {Object} 
+     * @private
+    */
     #root = null;
+
+    /** 
+     * Position of the top left corner of the window
+     * @type {FilletPoint} 
+     * @private
+    */
     #topLeft = null;
 
+    /** 
+     * Title of the window
+     * @type {string} 
+     * @private
+    */
+    #title = null;
+
+     /** 
+     * FilletMovePosition object
+     * @type {FilletMovePosition} 
+     * @private
+    */
     #mp = null;
+
+    /** 
+     * Flag. True if the window is moving
+     * @type {boolean} 
+     * @private
+    */
     #is_moving = false;
 
+    /** 
+     * Area of the window
+     * @type {FilletArea} 
+     * @private
+    */
     #bound_area = null;
-    #can_outofbounds = true;
+
+    /** 
+     * Flag. Window can be moved out of bounds
+     * @type {boolean} 
+     * @private
+    */
+    #can_outofbounds = false;
+
+    /** 
+     * Flag. Window can be sticked to browser window edge
+     * @type {boolean} 
+     * @private
+    */
     #can_edgestick = true;
+
+    /** 
+     * Size of zone where window can be sticked
+     * @type {number} 
+     * @private
+    */
     #stickAreaWidth = 20;
 
+    /** 
+     * Binded function "mouse down"
+     * @type {function} 
+     * @private
+    */
     #doc_mouse_down_binded = null;
+
+    /** 
+     * Binded function "mouse up"
+     * @type {function} 
+     * @private
+    */
     #doc_mouse_up_binded = null;
+
+    /** 
+     * Binded function "mouse move"
+     * @type {function} 
+     * @private
+    */
     #doc_mouse_move_binded = null;
 
+    /** 
+     * Core manager object
+     * @type {FilletCoreManager} 
+     * @private
+    */
     #core_manager = null;
 
     /**
-     * Represents a book.
+     * Represents a window.
      * @constructor
      * @param {string} element - User defined HTML element
      */
@@ -40,9 +129,16 @@ class FilletWindow {
         this.#document = document;
         this.#root.classList.add("fillet-window");
 
+        this.#title = document.createElement("div");
+        this.#title.classList.add("fillet-window-title");
+        this.#root.appendChild(this.#title);
+
         let coords = this.#root.getBoundingClientRect();
         this.#topLeft = new FilletPoint(coords.x, coords.y);
         
+        this.#title.addEventListener("mousedown", this.mouse_down.bind(this));
+        this.#title.addEventListener("mouseup",  this.mouse_up.bind(this));
+        this.#title.addEventListener("mousemove", this.mouse_move.bind(this));
         this.#root.addEventListener("mousedown", this.mouse_down.bind(this));
         this.#root.addEventListener("mouseup",  this.mouse_up.bind(this));
         this.#root.addEventListener("mousemove", this.mouse_move.bind(this));
@@ -181,6 +277,7 @@ class FilletWindow {
         this.#document.addEventListener("mousedown", this.#doc_mouse_down_binded);
         this.#document.addEventListener("mouseup",  this.#doc_mouse_up_binded);
         this.#document.addEventListener("mousemove", this.#doc_mouse_move_binded);
+
     }
 
     mouse_up(e){
@@ -199,5 +296,14 @@ class FilletWindow {
     browserWindowResizeEvent(e){
         this.#bound_area.setDimensions(window.innerWidth, window.innerHeight);
         this.moveWindowInBounds();
+    }
+
+    resize(w, h){
+        this.#root.style.width = w + "px";
+        this.#root.style.height = h + "px";
+
+        if (!this.#can_outofbounds){
+            this.moveWindowInBounds();
+        }
     }
 }
